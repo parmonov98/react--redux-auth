@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import "./Sidebar.css";
 import { toggleSideBar } from '../../actions/sidebar';
 
 
-const Sidebar = ({ isShown }) => {
+const Sidebar = ({ isShown, isExpanded }) => {
 
   if (!isShown) {
     return (
@@ -14,7 +14,7 @@ const Sidebar = ({ isShown }) => {
   }
 
   return (
-    <nav id="sidebar" data-include="sidebar" className="sidebar js-sidebar">
+    <nav id="sidebar" data-include="sidebar" className={`sidebar js-sidebar ${!isExpanded ? 'sidebar-hidden' : ''} `}>
       <div className="sidebar-content js-simplebar">
         <a className="sidebar-brand" href="index.html">
           <span className="align-middle">Admin panel</span>
@@ -132,6 +132,9 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => ({
   isShown: state.sidebar.isShown,
+  isExpanded: state.sidebar.isExpanded,
 });
+
+
 
 export default connect(mapStateToProps, { toggleSideBar })(Sidebar);

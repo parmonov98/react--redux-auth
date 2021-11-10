@@ -1,11 +1,13 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Fragment, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { toggleProfile } from '../../actions/navbar';
+import { toggleSideBar } from '../../actions/sidebar';
 
-const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, toggleSideBar, logout }) => {
 
   const authLinks = (
     <ul>
@@ -44,13 +46,23 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
     </ul>
   );
 
+  const { pathname } = useLocation();
+
+  const onClickHamburger = () => {
+    toggleSideBar();
+  }
 
   const onClickProfile = () => {
     toggleProfile();
   }
 
-  if (!isAuthenticated) {
-    return <Redirect to="/login" />;
+  if ((pathname !== '/register' || pathname === 'register')) {
+    if (!isAuthenticated) {
+      console.log(pathname);
+      return <Redirect to="/login" />;
+      // return ('');
+    }
+
   }
 
   if (!isNavbarShown) {
@@ -59,7 +71,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
 
   return (
     <nav className="navbar navbar-expand navbar-light navbar-bg" data-include="top">
-      <a className="sidebar-toggle js-sidebar-toggle">
+      <a className="sidebar-toggle js-sidebar-toggle" onClick={onClickHamburger}>
         <i className="hamburger align-self-center"></i>
       </a>
 
@@ -76,7 +88,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
           <li className="nav-item dropdown">
             <a className="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
               <div className="position-relative">
-                <i className="align-middle" data-feather="bell"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bell align-middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 <span className="indicator">4</span>
               </div>
             </a>
@@ -151,12 +163,12 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
             </a>
             {isProfileShown ? (<div className="dropdown-menu dropdown-menu-end show" data-bs-popper="none">
               <a className="dropdown-item" href="pages-profile.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user align-middle me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 Profile
               </a>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="#" onClick={logout}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out align-middle me-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-log-out align-middle me-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 Chiqish
               </a>
             </div>) :
@@ -170,6 +182,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
+  toggleSideBar: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   navbar: PropTypes.object.isRequired
 };
@@ -179,4 +192,4 @@ const mapStateToProps = (state) => ({
   navbar: state.navbar,
 });
 
-export default connect(mapStateToProps, { logout, toggleProfile })(Navbar);
+export default connect(mapStateToProps, { logout, toggleProfile, toggleSideBar })(Navbar);

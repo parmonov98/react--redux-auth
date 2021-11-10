@@ -1,11 +1,19 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
+import { hideNavbar } from '../../actions/navbar';
+import { hideSidebar } from '../../actions/sidebar';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, hideSidebar, hideNavbar }) => {
+
+  useEffect(() => {
+    hideSidebar();
+    hideNavbar();
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,7 +57,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               <div className="card">
                 <div className="card-body">
                   <div className="m-sm-4">
-                    <form>
+                    <form className="form" onSubmit={onSubmit} >
                       <div className="mb-3">
                         <label className="form-label">Ism:</label>
                         <input className="form-control form-control-lg"
@@ -107,13 +115,15 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </Fragment >
   );
 };
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  hideNavbar: PropTypes.func.isRequired,
+  hideSidebar: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -121,4 +131,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register, hideNavbar, hideSidebar })(Register);

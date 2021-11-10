@@ -17,29 +17,55 @@ import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
 import Navbar from '../layout/Navbar';
 
-const Routes = ({ toggleSideBar }) => {
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+
+const Routes = ({ toggleSideBar, sidebar: { isExpanded: isShown } }) => {
 
   return (
     <div className="main">
       <Alert />
       <Navbar />
-      <Switch>
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} toggleSideBar={toggleSideBar} />
-        <Route exact path="/profiles" component={Profiles} />
-        <Route exact path="/profile/:id" component={Profile} />
+      <div className={`content ${isShown ? 'is-expanded' : ''}`}>
+        <Switch>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} toggleSideBar={toggleSideBar} />
+          <Route exact path="/profiles" component={Profiles} />
+          <Route exact path="/profile/:id" component={Profile} />
 
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        <PrivateRoute exact path="/create-profile" component={CreateProfile} />
-        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-        <PrivateRoute exact path="/add-education" component={AddEducation} />
-        <PrivateRoute exact path="/add-experience" component={AddExperience} />
-        <PrivateRoute exact path="/posts" component={Posts} />
-        <PrivateRoute exact path="/posts/:id" component={Post} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+          <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+          <PrivateRoute exact path="/add-education" component={AddEducation} />
+          <PrivateRoute exact path="/add-experience" component={AddExperience} />
+          <PrivateRoute exact path="/posts" component={Posts} />
+          <PrivateRoute exact path="/posts/:id" component={Post} />
+          <Route component={NotFound} />
+        </Switch>
+
+      </div>
+    </div >
   );
 };
+Routes.propTypes = {
+  // showSideBar: PropTypes.func.isRequired,
+  // getCurrentProfile: PropTypes.func.isRequired,
+  // deleteAccount: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  sidebar: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+};
 
-export default Routes;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  profile: state.profile,
+  sidebar: state.sidebar,
+});
+
+// export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, showSideBar, showNavbar })(
+//   Routes
+// );
+export default connect(mapStateToProps, {})(
+  Routes
+);
