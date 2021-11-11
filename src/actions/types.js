@@ -33,3 +33,8 @@ export const SHOW_NAVBAR = 'SHOW_NAVBAR';
 export const HIDE_NAVBAR = 'HIDE_NAVBAR';
 export const TOGGLE_PROFILE = 'TOGGLE_PROFILE';
 
+export const ADD_USER = 'ADD_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const USER_ERROR = 'USER_ERROR';
+export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';

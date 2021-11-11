@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { toggleProfile } from '../../actions/navbar';
 import { toggleSideBar } from '../../actions/sidebar';
+import avatar from '../../img/avatar.jpg';
+
 
 const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, toggleSideBar, logout }) => {
 
@@ -56,17 +58,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
     toggleProfile();
   }
 
-  if ((pathname !== '/register' || pathname === 'register')) {
-    if (!isAuthenticated) {
-      console.log(pathname);
+  // console.log(isAuthenticated, loading);
+  if (!isAuthenticated && !loading) {
+    // console.log(pathname);
+    if ((pathname !== '/register' || pathname === 'register')) {
       return <Redirect to="/login" />;
-      // return ('');
     }
-
   }
 
   if (!isNavbarShown) {
-    return (<nav>1</nav>);
+    return (<nav></nav>);
   }
 
   return (
@@ -156,7 +157,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
             </a>
 
             <a className="nav-link dropdown-toggle d-none d-sm-inline-block show" href="#" data-bs-toggle="dropdown" onClick={onClickProfile}>
-              <img src="img/avatars/avatar.jpg" className="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span
+              <img src={avatar} className="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span
                 className="text-dark">
                 Charles Hall
               </span>
