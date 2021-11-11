@@ -30,7 +30,8 @@ const Login = ({ login, isAuthenticated, hideSidebar }) => {
     login(email, password);
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated === true) {
+    console.log(isAuthenticated);
     return <Redirect to="/dashboard" />;
   }
 

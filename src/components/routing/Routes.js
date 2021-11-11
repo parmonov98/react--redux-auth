@@ -35,15 +35,8 @@ const Routes = ({ toggleSideBar, sidebar: { isExpanded: isShown } }) => {
 
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/users" component={Users} />
-          {/* <Route exact path="/profiles" component={Profiles} />
-          <Route exact path="/profile/:id" component={Profile} />
 
-          <PrivateRoute exact path="/create-profile" component={CreateProfile} />
-          <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-          <PrivateRoute exact path="/add-education" component={AddEducation} />
-          <PrivateRoute exact path="/add-experience" component={AddExperience} />
-          <PrivateRoute exact path="/posts" component={Posts} />
-          <PrivateRoute exact path="/posts/:id" component={Post} /> */}
+          {/* <PrivateRoute exact path="/users/:id" component={User} /> */}
           <Route component={NotFound} />
         </Switch>
 
@@ -52,23 +45,16 @@ const Routes = ({ toggleSideBar, sidebar: { isExpanded: isShown } }) => {
   );
 };
 Routes.propTypes = {
-  // showSideBar: PropTypes.func.isRequired,
-  // getCurrentProfile: PropTypes.func.isRequired,
-  // deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   sidebar: PropTypes.object.isRequired,
-  // profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  // profile: state.profile,
   sidebar: state.sidebar,
 });
 
-// export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, showSideBar, showNavbar })(
-//   Routes
-// );
+
 export default connect(mapStateToProps, {})(
   Routes
 );

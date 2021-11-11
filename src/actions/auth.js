@@ -70,13 +70,14 @@ export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
+      'Accept': "application/json"
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post('/api/auth/login', body, config);
+    const res = await axios.post('/api/auth/login/', body, config);
 
     dispatch({
       type: LOGIN_SUCCESS,

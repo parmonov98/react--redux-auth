@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import { getCurrentUser } from '../../actions/user';
+import { loadUser } from '../../actions/auth';
 import { showSideBar } from '../../actions/sidebar';
 import { showNavbar } from '../../actions/navbar'
 
@@ -13,16 +14,22 @@ import avatar from '../../img/avatar.jpg'
 
 const Dashboard = ({
   getCurrentUser,
-  auth: { user, loading },
+  loadUser,
+  auth: { user, loading, isAuthenticated },
   // user: { users, loading },
   showSideBar
 }) => {
   useEffect(() => {
-    getCurrentUser();
+    loadUser();
     showSideBar();
     showNavbar();
 
   }, [getCurrentUser]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log(isAuthenticated);
+  if (isAuthenticated !== true) {
+    return <Redirect to="/login" />;
+  }
 
   return loading && user === null ? (
     <Spinner />
@@ -44,8 +51,8 @@ const Dashboard = ({
             <div className="card-body text-center">
               <img src={avatar} alt="Christina Mason" className="img-fluid rounded-circle mb-2"
                 width="128" height="128" />
-              <h5 className="card-title mb-0">{user.name}</h5>
-              <div className="text-muted mb-2">{user.email}</div>
+              <h5 className="card-title mb-0">{user?.name}</h5>
+              <div className="text-muted mb-2">{user?.email}</div>
 
               {/* <div>
                 <a className="btn btn-primary btn-sm" href="#">Follow</a>
@@ -223,6 +230,7 @@ const Dashboard = ({
 Dashboard.propTypes = {
   showSideBar: PropTypes.func.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   // user: PropTypes.object.isRequired,
 };
@@ -233,6 +241,6 @@ const mapStateToProps = (state) => ({
   navbar: state.navbar,
 });
 
-export default connect(mapStateToProps, { getCurrentUser, showSideBar, showNavbar })(
+export default connect(mapStateToProps, { getCurrentUser, loadUser, showSideBar, showNavbar })(
   Dashboard
 );
