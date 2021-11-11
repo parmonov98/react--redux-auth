@@ -7,7 +7,6 @@ import { logout } from '../../actions/auth';
 import { toggleProfile } from '../../actions/navbar';
 import { toggleSideBar } from '../../actions/sidebar';
 import avatar from '../../img/avatar.jpg';
-import { MAX_MOBILE_WINDOW_WIDTH } from '../../constants';
 import { ChevronDown } from 'react-feather';
 
 const Navbar = ({ auth: { isAuthenticated, loading, user }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, toggleSideBar, logout }) => {

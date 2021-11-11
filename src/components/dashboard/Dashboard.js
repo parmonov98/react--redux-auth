@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
-import Experience from './Experience';
-import Education from './Education';
 import { getCurrentUser } from '../../actions/user';
 import { showSideBar } from '../../actions/sidebar';
 import { showNavbar } from '../../actions/navbar'
