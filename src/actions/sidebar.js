@@ -4,6 +4,7 @@ import {
   SHOW_SIDEBAR,
   HIDE_SIDEBAR,
   TOGGLE_SIDEBAR,
+  SET_ACTIVE_MENU_ITEM
 } from './types';
 
 
@@ -22,5 +23,12 @@ export const hideSidebar = () => (dispatch) => {
 export const showSideBar = () => (dispatch) => {
   dispatch({
     type: SHOW_SIDEBAR,
+  });
+};
+
+export const setActiveItem = (route) => (dispatch) => {
+  dispatch({
+    type: SET_ACTIVE_MENU_ITEM,
+    payload: route
   });
 };

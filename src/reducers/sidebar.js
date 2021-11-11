@@ -2,16 +2,10 @@ import {
   SHOW_SIDEBAR,
   HIDE_SIDEBAR,
   TOGGLE_SIDEBAR,
+  SET_ACTIVE_MENU_ITEM
 } from '../actions/types';
 import { AlignLeft, DollarSign, Feather, Filter, Grid, Map, Sidebar, Square, TrendingDown, TrendingUp, Truck, UserCheck, Users, UserX } from 'react-feather';
 
-// var UserCheckIcon = React.createClass({
-//   render: function () {
-//     return (
-//       <UserCheck />
-//     );
-//   }
-// });
 const initalState = {
   isExpanded: true,
   isShown: true,
@@ -203,6 +197,18 @@ export default function (state = initalState, action) {
       return {
         ...state,
         isExpanded: !state.isExpanded
+      };
+    case SET_ACTIVE_MENU_ITEM:
+      return {
+        ...state,
+        menu: state.menu.map((item) => {
+          if (item.route === action.payload) {
+            item.is_active = true
+          } else {
+            item.is_active = false
+          }
+          return item;
+        })
       };
     default:
       return state;

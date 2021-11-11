@@ -28,6 +28,7 @@ export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const SHOW_SIDEBAR = 'SHOW_SIDEBAR';
 export const HIDE_SIDEBAR = 'HIDE_SIDEBAR';
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
+export const SET_ACTIVE_MENU_ITEM = 'SET_ACTIVE_MENU_ITEM';
 
 export const SHOW_NAVBAR = 'SHOW_NAVBAR';
 export const HIDE_NAVBAR = 'HIDE_NAVBAR';

@@ -3,17 +3,20 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import "./Sidebar.css";
-import { toggleSideBar } from '../../actions/sidebar';
+import { toggleSideBar, setActiveItem } from '../../actions/sidebar';
 
 
-const Sidebar = ({ isShown, isExpanded, menu }) => {
+const Sidebar = ({ isShown, isExpanded, menu, setActiveItem }) => {
 
   const { pathname } = useLocation();
 
   useEffect(() => {
     console.log(pathname);
-    const routePath = pathname.replace('/');
-
+    if (pathname) {
+      if (pathname !== '') {
+        setActiveItem(pathname);
+      }
+    }
   }, [pathname]);
 
 
@@ -38,7 +41,7 @@ const Sidebar = ({ isShown, isExpanded, menu }) => {
                   {item.name}
                 </span>
               ) : (
-                <Link className="sidebar-link">
+                <Link className="sidebar-link" to={item.route}>
                   {item.icon_tag}
                   <span className="align-middle">
                     {item.name}
@@ -57,6 +60,7 @@ const Sidebar = ({ isShown, isExpanded, menu }) => {
 
 Sidebar.propTypes = {
   isShown: PropTypes.bool,
+  setActiveItem: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -67,4 +71,4 @@ const mapStateToProps = (state) => ({
 
 
 
-export default connect(mapStateToProps, { toggleSideBar })(Sidebar);
+export default connect(mapStateToProps, { toggleSideBar, setActiveItem })(Sidebar);
