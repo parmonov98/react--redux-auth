@@ -1,12 +1,18 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import UserForm from './UserForm';
+import UserForm from './UserForm';
 import UserItem from './UserItem';
 import { connect } from 'react-redux';
 import { getUsers } from '../../actions/user';
 import Spinner from '../layout/Spinner';
 
 const Users = ({ getUsers, user: { users, loading } }) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -16,15 +22,13 @@ const Users = ({ getUsers, user: { users, loading } }) => {
   ) : (
     <Fragment>
       <div className="container-fluid p-0">
-
-
         <div className="row mb-2">
           <div className="col-md-12 col-lg-8">
             <h1 className="h3 mb-3"><strong>Firmadagi</strong> xodimlar </h1>
           </div>
           <div className="col-lg-4">
             <div className="crud_actions text-end">
-              <button className="btn btn-primary">Foydalanuvchi <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus align-middle mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+              <button className="btn btn-primary" onClick={handleShow}>Foydalanuvchi <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus align-middle mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
             </div>
           </div>
         </div>
@@ -58,7 +62,8 @@ const Users = ({ getUsers, user: { users, loading } }) => {
         </div>
 
       </div>
-      {/* <PostForm /> */}
+
+      <UserForm show={show} handleShow={handleShow} handleClose={handleClose} />
     </Fragment>
   );
 };

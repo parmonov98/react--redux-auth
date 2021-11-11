@@ -1,43 +1,40 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPost } from '../../actions/post';
+import { addUser } from '../../actions/user';
 
-const PostForm = ({ addPost }) => {
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import ModalHeader from 'react-bootstrap/ModalHeader';
+import ModalTitle from 'react-bootstrap/ModalTitle';
+import ModalBody from 'react-bootstrap/ModalBody';
+import ModalFooter from 'react-bootstrap/ModalFooter';
+
+const UserForm = ({ addPost, handleShow, handleClose, show }) => {
   const [text, setText] = useState('');
 
   return (
     <Fragment>
-      <div className="post-form">
-        <div className="bg-primary p">
-          <h3>Say Something...</h3>
-        </div>
-        <form
-          className="form my-1"
-          onSubmit={(e) => {
-            e.preventDefault();
-            addPost({ text });
-            setText('');
-          }}
-        >
-          <textarea
-            name="text"
-            cols="30"
-            rows="5"
-            placeholder="Create a post"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            required
-          ></textarea>
-          <input type="submit" className="btn btn-dark my-1" value="Submit" />
-        </form>
-      </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Yangi foydalanuvchi qo'shish</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Yangi foydalanuvchi qo'shish formasi</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Yopish
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Saqlash
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Fragment>
   );
 };
 
-PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
+UserForm.propTypes = {
+  addUser: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addPost })(PostForm);
+export default connect(null, { addUser })(UserForm);
