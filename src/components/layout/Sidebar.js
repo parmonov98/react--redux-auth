@@ -1,23 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import "./Sidebar.css";
 import { toggleSideBar, setActiveItem } from '../../actions/sidebar';
 
+import { MAX_MOBILE_WINDOW_WIDTH } from '../../constants';
 
-const Sidebar = ({ isShown, isExpanded, menu, setActiveItem }) => {
+
+const Sidebar = ({ isShown, isExpanded, menu, setActiveItem, toggleSideBar }) => {
 
   const { pathname } = useLocation();
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    console.log(pathname);
+    console.log(pathname, width);
+
+    if (isExpanded && width <= MAX_MOBILE_WINDOW_WIDTH) {
+      toggleSideBar();
+    }
     if (pathname) {
       if (pathname !== '') {
         setActiveItem(pathname);
       }
     }
-  }, [pathname]);
+  }, [pathname, width]);
 
 
   if (!isShown) {
@@ -60,7 +67,8 @@ const Sidebar = ({ isShown, isExpanded, menu, setActiveItem }) => {
 
 Sidebar.propTypes = {
   isShown: PropTypes.bool,
-  setActiveItem: PropTypes.func.isRequired
+  setActiveItem: PropTypes.func.isRequired,
+  toggleSideBar: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,46 +7,13 @@ import { logout } from '../../actions/auth';
 import { toggleProfile } from '../../actions/navbar';
 import { toggleSideBar } from '../../actions/sidebar';
 import avatar from '../../img/avatar.jpg';
+import { MAX_MOBILE_WINDOW_WIDTH } from '../../constants';
+import { ChevronDown } from 'react-feather';
 
+const Navbar = ({ auth: { isAuthenticated, loading, user }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, toggleSideBar, logout }) => {
 
-const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavbarShown, isProfileOpen: isProfileShown }, toggleProfile, toggleSideBar, logout }) => {
+  const [width, setWidth] = useState(window.innerWidth);
 
-  const authLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles"> Developers </Link>
-      </li>
-      <li>
-        <Link to="/posts"> Posts </Link>
-      </li>
-      <li>
-        <Link to="/dashboard">
-          <i classNameName="fas fa-user"></i>{' '}
-          <span classNameName="hide-sm">Dashboard</span>
-        </Link>
-      </li>
-      <li>
-        <a onClick={logout} href="#!">
-          <i classNameName="fas fa-sign-out-alt"></i>{' '}
-          <span classNameName="hide-sm">Logout</span>
-        </a>
-      </li>
-    </ul>
-  );
-
-  const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
-  );
 
   const { pathname } = useLocation();
 
@@ -58,9 +25,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
     toggleProfile();
   }
 
-  // console.log(isAuthenticated, loading);
   if (!isAuthenticated && !loading) {
-    // console.log(pathname);
     if ((pathname !== '/register' || pathname === 'register')) {
       return <Redirect to="/login" />;
     }
@@ -152,20 +117,17 @@ const Navbar = ({ auth: { isAuthenticated, loading }, navbar: { isShown: isNavba
             </div>
           </li>
           <li className="nav-item dropdown">
-            <a className="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-              <i className="align-middle" data-feather="settings"></i>
-            </a>
-
-            <a className="nav-link dropdown-toggle d-none d-sm-inline-block show" href="#" data-bs-toggle="dropdown" onClick={onClickProfile}>
-              <img src={avatar} className="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span
-                className="text-dark">
-                Charles Hall
+            <a className="nav-link d-sm-inline-block show" href="#" data-bs-toggle="dropdown" onClick={onClickProfile}>
+              <img src={avatar} className="avatar img-fluid rounded me-1" alt="Charles Hall" />
+              <span className="text-dark d-none d-lg-inline-block d-xl-inline-block">
+                {user?.name}
               </span>
+              <ChevronDown />
             </a>
             {isProfileShown ? (<div className="dropdown-menu dropdown-menu-end show" data-bs-popper="none">
               <a className="dropdown-item" href="pages-profile.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user align-middle me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                Profile
+                Akkaunt
               </a>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="#" onClick={logout}>

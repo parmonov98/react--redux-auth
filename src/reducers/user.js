@@ -3,13 +3,14 @@ import {
   GET_USERS,
   ADD_USER,
   DELETE_USER,
-  USER_ERROR
+  USER_ERROR,
+  GET_CURRENT_USER
 } from '../actions/types';
 
 const initialState = {
   users: [],
   user: null,
-  loading: true,
+  loading: false,
   error: {},
 };
 
@@ -17,6 +18,12 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_CURRENT_USER:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+      };
     case GET_USER:
       return {
         ...state,

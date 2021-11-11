@@ -1,12 +1,29 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import {
+  GET_CURRENT_USER,
   GET_USER,
   GET_USERS,
   ADD_USER,
   DELETE_USER,
-  USER_ERROR
+  USER_ERROR,
+  AUTH_ERROR
 } from './types';
+
+export const getCurrentUser = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/auth/user`);
+    dispatch({
+      type: GET_CURRENT_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 export const getUser = (id) => async (dispatch) => {
   // try {

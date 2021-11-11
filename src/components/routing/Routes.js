@@ -57,12 +57,12 @@ Routes.propTypes = {
   // deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   sidebar: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+  // profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile,
+  // profile: state.profile,
   sidebar: state.sidebar,
 });
 

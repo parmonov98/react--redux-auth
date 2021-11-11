@@ -7,66 +7,60 @@ import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
-import { getCurrentProfile, deleteAccount } from '../../actions/profile';
+import { getCurrentUser } from '../../actions/user';
 import { showSideBar } from '../../actions/sidebar';
 import { showNavbar } from '../../actions/navbar'
 
+import avatar from '../../img/avatar.jpg'
+
 const Dashboard = ({
-  getCurrentProfile,
-  deleteAccount,
-  auth: { user },
-  profile: { profile, loading },
+  getCurrentUser,
+  auth: { user, loading },
+  // user: { users, loading },
   showSideBar
 }) => {
   useEffect(() => {
-    getCurrentProfile();
+    getCurrentUser();
     showSideBar();
     showNavbar();
 
-  }, [getCurrentProfile]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [getCurrentUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return loading && profile === null ? (
+  return loading && user === null ? (
     <Spinner />
   ) : (
     <div className="container-fluid p-0">
 
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <h1 className="h3 d-inline align-middle">Profile</h1>
         <a className="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
           Get more page examples
         </a>
-      </div>
+      </div> */}
       <div className="row">
         <div className="col-md-2 col-xl-3">
           <div className="card mb-3">
             <div className="card-header">
-              <h5 className="card-title mb-0">Profile Details</h5>
+              <h5 className="card-title mb-0">Akkaunt ma'umotlari</h5>
             </div>
             <div className="card-body text-center">
-              <img src="img/avatars/avatar-4.jpg" alt="Christina Mason" className="img-fluid rounded-circle mb-2"
+              <img src={avatar} alt="Christina Mason" className="img-fluid rounded-circle mb-2"
                 width="128" height="128" />
-              <h5 className="card-title mb-0">Christina Mason</h5>
-              <div className="text-muted mb-2">Lead Developer</div>
+              <h5 className="card-title mb-0">{user.name}</h5>
+              <div className="text-muted mb-2">{user.email}</div>
 
-              <div>
+              {/* <div>
                 <a className="btn btn-primary btn-sm" href="#">Follow</a>
                 <a className="btn btn-primary btn-sm" href="#"><span data-feather="message-square"></span> Message</a>
-              </div>
+              </div> */}
             </div>
-            <hr className="my-0" />
+            {/* <hr className="my-0" />
             <div className="card-body">
-              <h5 className="h6 card-title">Skills</h5>
+              <h5 className="h6 card-title">Rollari</h5>
               <a href="#" className="badge bg-primary me-1 my-1">HTML</a>
               <a href="#" className="badge bg-primary me-1 my-1">JavaScript</a>
-              <a href="#" className="badge bg-primary me-1 my-1">Sass</a>
-              <a href="#" className="badge bg-primary me-1 my-1">Angular</a>
-              <a href="#" className="badge bg-primary me-1 my-1">Vue</a>
-              <a href="#" className="badge bg-primary me-1 my-1">React</a>
-              <a href="#" className="badge bg-primary me-1 my-1">Redux</a>
-              <a href="#" className="badge bg-primary me-1 my-1">UI</a>
-              <a href="#" className="badge bg-primary me-1 my-1">UX</a>
-            </div>
-            <hr className="my-0" />
+            </div> */}
+            {/* <hr className="my-0" />
             <div className="card-body">
               <h5 className="h6 card-title">About</h5>
               <ul className="list-unstyled mb-0">
@@ -78,7 +72,7 @@ const Dashboard = ({
                 <li className="mb-1"><span data-feather="map-pin" className="feather-sm me-1"></span> From <a
                   href="#">Boston</a></li>
               </ul>
-            </div>
+            </div> */}
             <hr className="my-0" />
             <div className="card-body">
               <h5 className="h6 card-title">Elsewhere</h5>
@@ -96,8 +90,7 @@ const Dashboard = ({
         <div className="col-md-10 col-xl-9">
           <div className="card">
             <div className="card-header">
-
-              <h5 className="card-title mb-0">Activities</h5>
+              <h5 className="card-title mb-0">Tizimdagi faolliklari</h5>
             </div>
             <div className="card-body h-100">
 
@@ -231,18 +224,17 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   showSideBar: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
-  deleteAccount: PropTypes.func.isRequired,
+  getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+  // user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile,
+  // user: state.user,
   navbar: state.navbar,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, showSideBar, showNavbar })(
+export default connect(mapStateToProps, { getCurrentUser, showSideBar, showNavbar })(
   Dashboard
 );
