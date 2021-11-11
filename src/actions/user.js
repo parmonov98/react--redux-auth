@@ -49,11 +49,10 @@ export const getUsers = () => async (dispatch) => {
       payload: res.data.data,
     });
   } catch (err) {
-    console.log(err);
-    // dispatch({
-    //   type: USER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
+    dispatch({
+      type: USER_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };
 

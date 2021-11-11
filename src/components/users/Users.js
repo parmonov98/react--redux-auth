@@ -63,6 +63,7 @@ const Users = ({ getUsers, user: { users, loading } }) => {
   );
 };
 
+
 Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,

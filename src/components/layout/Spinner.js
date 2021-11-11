@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import spinner from './spinner.gif';
 
 export default () => (
-  <Fragment>
-    <svg width="24" height="24" viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" fill="#326abc">
+  <div style={loaderWrapperStyles} className="loader-wrapper">
+    <svg width="24" height="24" viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" fill="#fff">
       <rect y="10" width="15" height="120" rx="6">
         <animate attributeName="height"
           begin="0.5s" dur="1s"
@@ -55,5 +55,17 @@ export default () => (
           repeatCount="indefinite" />
       </rect>
     </svg>
-  </Fragment>
+  </div>
 );
+const loaderWrapperStyles = {
+  backgroundColor: '#2980B9',
+  width: "100vw",
+  height: "100vh",
+  position: "absolute",
+  left: 0, top: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 1
+};
+
