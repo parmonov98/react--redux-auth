@@ -16,13 +16,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 
-const Routes = ({ toggleSideBar, sidebar: { isExpanded: isShown } }) => {
+const Routes = ({ toggleSideBar, sidebar: { isShown, isExpanded } }) => {
+
+  let condition = true;
+  if (isShown && isExpanded === false) {
+    condition = false;
+  }
+  if (isShown !== true) {
+    condition = false;
+  }
 
   return (
     <div className="main">
       <Alert />
       <Navbar />
-      <div className={`content ${isShown ? 'is-expanded' : ''}`}>
+      <div className={`content ${condition ? 'is-expanded' : ''}`}>
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} toggleSideBar={toggleSideBar} />
