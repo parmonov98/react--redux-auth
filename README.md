@@ -1,5 +1,5 @@
 # react-redux-auth
-This project is a starter kit for JWT based Laravel appalication.
+This project is a starter kit for JWT based Laravel application.
 
 Setup steps:
 
